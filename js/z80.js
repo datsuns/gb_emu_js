@@ -78,6 +78,7 @@ Z80 = {
 
 		Z80._clock.m = 0; Z80._clock.t = 0;
 	}
+
 };
 
 Z80Flag = {
@@ -117,3 +118,23 @@ Z80Flag = {
 		}
 	}
 };
+
+Dispacher: function(){
+	while(true){
+		var op = MMU.rb(Z80._r.pc);
+		Z80._map[op]();
+		Z80._r.pc++;
+		Z80._r.pc &= 65535;
+		Z80._clock.m += Z80._r.m;
+		Z80._clock.t += Z80._r.t;
+	}
+}
+
+Z80._map = [
+	Z80._ops.NOP,
+	Z80._ops.LDBCnn,
+	Z80._ops.LDBCmA,
+	Z80._ops.INCBC,
+	Z80._ops.INCr_b,
+	// ...
+];
