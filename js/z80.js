@@ -46,6 +46,38 @@ Z80 = {
 	NOP: function() {
 		Z80._r.m = 1; Z80._r.t = 4;
 	}
+
+	PUSHBC: function() {
+		Z80._r.sp--;
+		MMU.wb(Z80._r.sp, Z80._r.b);
+		Z80._r.sp--;
+		MMU.wb(Z80._r.sp, Z80._r.c);
+		Z80._r.m = 3; Z80._r.t = 12;
+	}
+
+	POPHL: function() {
+		Z80._r.l = MMU.rb(Z80._r.sp);
+		Z80._r.sp++;
+		Z80._r.h = MMU.rb(Z80._r.sp);
+		Z80._r.sp++;
+		Z80._r.m = 3; Z80._r.t = 12;
+	}
+
+	LDAmm: function() {
+		var addr = MMU.rw(Z80._r.pc);
+		Z80._r.pc += 2;
+		Z80._r.a = MMU.rb(addr);
+		Z80._r.m = 4; Z80._r.t=16;
+	}
+
+	reset: function() {
+		Z80._r.a = 0; Z80._r.b = 0; Z80._r.c = 0; Z80._r.d = 0;
+		Z80._r.e = 0; Z80._r.h = 0; Z80._r.l = 0; Z80._r.f = 0;
+		Z80._r.sp = 0;
+		Z80._r.pc = 0;
+
+		Z80._clock.m = 0; Z80._clock.t = 0;
+	}
 };
 
 Z80Flag = {
