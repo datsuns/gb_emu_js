@@ -20,7 +20,7 @@ Z80 = {
 		pc:0,
 		sp:0,
 
-		// clocks for last inst
+		// clocks that takes while last inst
 		m:0,
 		t:0
 	}
