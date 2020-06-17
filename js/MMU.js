@@ -41,7 +41,10 @@ MMU = {
 			case 0x1000:
 			case 0x2000:
 			case 0x3000:
-				return MMU._rom[addr];
+				//return MMU._rom[addr];
+				// Since the ROM file is held as a string,
+				// instead of an array of numbers
+				return MMU._rom.charCodeAt(addr);
 
 			case 0x4000:
 			case 0x5000:
