@@ -19,6 +19,11 @@ MMU = {
 	_eram: [],	// External RAM
 	_zram: [],
 
+	MMU.load = function(file) {
+		var b = new BinFileReader(file);
+		MMU._rom = b.readString(b.getFileSize(), 0);
+	}
+
 
 	rb: function(addr){
 		switch(addr & 0xF000){
